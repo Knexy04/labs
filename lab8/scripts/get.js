@@ -5,8 +5,8 @@ export const options = {
   vus: Number(__ENV.VUS || 10),
   duration: __ENV.DURATION || '30s',
   thresholds: {
-    http_req_failed: ['rate<0.01'], // <1% errors
-    http_req_duration: ['p(95)<800'], // 95% under 800ms (tune as needed)
+    http_req_failed: ['rate<0.01'],
+    http_req_duration: ['p(95)<800'],
   },
 };
 
@@ -21,5 +21,5 @@ export default function () {
     'has body': (r) => (r.body || '').length > 0,
   });
 
-  sleep(Number(__ENV.SLEEP || 1)); // small pacing to avoid too tight loop
+  sleep(Number(__ENV.SLEEP || 1));
 }

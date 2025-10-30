@@ -1,0 +1,12 @@
+{
+  "name": "lab8-sample",
+  "version": "1.0.0",
+  "description": "Static JSON payload for local load testing",
+  "items": [
+    { "id": 1, "value": "alpha" },
+    { "id": 2, "value": "beta" },
+    { "id": 3, "value": "gamma" },
+    { "id": 4, "value": "delta" },
+    { "id": 5, "value": "epsilon" }
+  ]
+}

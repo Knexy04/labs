@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "JSONPlaceholder Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Post",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/1",
+          "protocol": "https",
+          "host": ["jsonplaceholder","typicode","com"],
+          "path": ["posts","1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+              "const json = pm.response.json();",
+              "pm.test(\"Has expected fields\", function () { pm.expect(json.id).to.eql(1); pm.expect(json).to.have.property('userId'); pm.expect(json).to.have.property('title'); pm.expect(json).to.have.property('body'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST Create Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}"
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts",
+          "protocol": "https",
+          "host": ["jsonplaceholder","typicode","com"],
+          "path": ["posts"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 201\", function () { pm.response.to.have.status(201); });",
+              "const json = pm.response.json();",
+              "pm.test(\"Echoed fields and id present\", function () { pm.expect(json.title).to.eql('foo'); pm.expect(json.body).to.eql('bar'); pm.expect(json.userId).to.eql(1); pm.expect(json).to.have.property('id'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT Update Post",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"updated\",\n  \"body\": \"lorem\",\n  \"userId\": 1\n}"
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/1",
+          "protocol": "https",
+          "host": ["jsonplaceholder","typicode","com"],
+          "path": ["posts","1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+              "const json = pm.response.json();",
+              "pm.test(\"Fields updated\", function () { pm.expect(json.id).to.eql(1); pm.expect(json.title).to.eql('updated'); pm.expect(json.body).to.eql('lorem'); pm.expect(json.userId).to.eql(1); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

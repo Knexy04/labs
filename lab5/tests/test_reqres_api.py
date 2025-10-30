@@ -44,10 +44,11 @@ def test_update_post_put_returns_200_and_updates_fields():
     assert body.get("userId") == payload["userId"]
 
 
-def test_get_nonexistent_post_returns_empty_object_with_200():
-    # jsonplaceholder returns 200 with {} for many nonexistent resources
+def test_get_nonexistent_post_returns_404_or_empty_object():
     resp = requests.get(f"{BASE_URL}/posts/999999")
-    assert resp.status_code == 200
-    json_body = resp.json()
-    assert isinstance(json_body, dict)
-    assert json_body == {} or json_body.get("id") != 999999
+    # JSONPlaceholder may return 404 for nonexistent, or 200 with empty object in some cases
+    assert resp.status_code in (200, 404)
+    if resp.status_code == 200:
+        json_body = resp.json()
+        assert isinstance(json_body, dict)
+        assert json_body == {} or json_body.get("id") != 999999
